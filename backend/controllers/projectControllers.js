@@ -1,18 +1,12 @@
 const Project = require('../models/Project');
 
 module.exports.createProject_post = async (req, res) => {
-  const { title, generalObjectives, specificObjectives, author, budget } =
-    req.body;
   const status = 'pending';
   const phase = 'development';
 
   try {
     const project = await Project.create({
-      title,
-      generalObjectives,
-      specificObjectives,
-      author,
-      budget,
+      ...req.body,
       status,
       phase,
     });

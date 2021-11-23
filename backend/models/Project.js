@@ -16,9 +16,12 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  participants: {
-    type: [String],
-  },
+  participants: [
+    {
+      name: String,
+      email: String,
+    },
+  ],
   status: {
     type: String,
     required: true,
