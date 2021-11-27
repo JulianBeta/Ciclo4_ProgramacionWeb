@@ -1,10 +1,10 @@
-import SignUpForm from './components/SignUpForm';
+import LoginForm from './components/forms/LoginForm';
 
 const App = () => {
   return (
-    <div>
-      <SignUpForm />
-    </div>
+    <>
+      <LoginForm />
+    </>
   );
 };
 

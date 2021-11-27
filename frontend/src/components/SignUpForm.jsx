@@ -97,7 +97,6 @@ const SignUpForm = () => {
               fullWidth
               required
             />
-            {/* select */}
             <FormControl fullWidth>
               <InputLabel id='select-label'>Rol</InputLabel>
               <Select
