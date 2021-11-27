@@ -1,5 +1,14 @@
 import SendIcon from '@mui/icons-material/Send';
-import { Button, Container, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { Box } from '@mui/system';
 import { useState } from 'react';
 
@@ -8,6 +17,8 @@ const SignUpForm = () => {
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rol, setRol] = useState('');
+  const options = ['Student', 'Leader', 'Teacher'];
 
   const clearForm = () => {
     setName('');
@@ -19,7 +30,7 @@ const SignUpForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // fetch POST
-    console.log('submitted', name, surname, email, password);
+    console.log('submitted', name, surname, email, password, rol);
     clearForm();
   };
   return (
@@ -69,6 +80,22 @@ const SignUpForm = () => {
               required
             />
             {/* select */}
+            <FormControl fullWidth>
+              <InputLabel id='select-label'>Rol</InputLabel>
+              <Select
+                labelId='select-label'
+                id='rol'
+                value={rol}
+                label='Rol'
+                onChange={(e) => setRol(e.target.value)}
+              >
+                {options.map((option) => (
+                  <MenuItem key={option} value={option}>
+                    {option}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
             <Button variant='contained' endIcon={<SendIcon />} type='submit'>
               Submit
             </Button>
