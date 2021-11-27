@@ -1,7 +1,9 @@
+import SignUpForm from './components/SignUpForm';
+
 const App = () => {
   return (
     <div>
-      <header></header>
+      <SignUpForm />
     </div>
   );
 };
