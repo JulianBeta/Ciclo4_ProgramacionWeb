@@ -1,9 +1,9 @@
-import LoginForm from './components/forms/LoginForm';
+import WelcomePage from './components/WelcomePage';
 
 const App = () => {
   return (
     <>
-      <LoginForm />
+      <WelcomePage />
     </>
   );
 };
