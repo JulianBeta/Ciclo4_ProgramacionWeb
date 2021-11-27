@@ -28,11 +28,13 @@ const LoginForm = () => {
         body: JSON.stringify(payload),
       });
       const data = await res.json();
-      console.log(data);
       if (!data) {
         setError(true);
       } else {
         // redirect user to the app
+        console.log(data.data.isLogin);
+        // set global user state
+        console.log(data.data.user);
       }
     } catch (err) {
       console.log(err);
@@ -48,6 +50,7 @@ const LoginForm = () => {
             <Box sx={{ my: 2 }}>
               <TextField
                 value={email}
+                error={error}
                 onChange={(e) => setEmail(e.target.value)}
                 id='email'
                 label='Email'
@@ -60,6 +63,7 @@ const LoginForm = () => {
             <Box sx={{ my: 2 }}>
               <TextField
                 value={password}
+                error={error}
                 onChange={(e) => setPassword(e.target.value)}
                 id='password'
                 label='Password'
