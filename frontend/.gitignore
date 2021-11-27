@@ -8,6 +8,11 @@
 # testing
 /coverage
 
+#history
+.history
+#vscode
+.vscode
+
 # production
 /build
 
