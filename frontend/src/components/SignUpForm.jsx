@@ -27,9 +27,23 @@ const SignUpForm = () => {
     setPassword('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // fetch POST
+    const endPoint = 'http://localhost:8000/signup_post';
+    const payload = {
+      firstName: name,
+      lastName: surname,
+      email,
+      password,
+      rol,
+    };
+    await fetch(endPoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
     console.log('submitted', name, surname, email, password, rol);
     clearForm();
   };
