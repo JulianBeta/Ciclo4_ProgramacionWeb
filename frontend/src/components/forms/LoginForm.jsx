@@ -1,24 +1,30 @@
-import { Button, Grid, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { useEffect, useState } from 'react';
+import { Button, Grid, TextField, Typography } from '@mui/material'
+import { Box } from '@mui/system'
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
+import { GlobalContext } from '../../context/GlobalContext'
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(false)
+  const navigate = useNavigate()
+
+  // globalContext
+  const { setCurrentUser } = useContext(GlobalContext)
 
   useEffect(() => {
     let timer = setTimeout(() => {
-      setError(false);
-    }, 4000);
+      setError(false)
+    }, 4000)
 
-    return () => clearTimeout(timer);
-  }, [error]);
+    return () => clearTimeout(timer)
+  }, [error])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const endPoint = 'http://localhost:8000/login';
-    const payload = { email, password };
+    e.preventDefault()
+    const endPoint = 'http://localhost:8000/login'
+    const payload = { email, password }
     try {
       const res = await fetch(endPoint, {
         method: 'POST',
@@ -26,21 +32,20 @@ const LoginForm = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
-      });
-      const data = await res.json();
+      })
+      const data = await res.json()
       if (!data) {
-        setError(true);
+        setError(true)
       } else {
-        // redirect user to the app
-        console.log(data.data.isLogin);
-        // set global user state
-        console.log(data.data.user);
+        console.log(data.data)
+        navigate('/home')
+        setCurrentUser(data.data)
       }
     } catch (err) {
-      console.log(err);
-      setError(true);
+      console.log(err)
+      setError(true)
     }
-  };
+  }
   return (
     <Box sx={{ my: 4 }}>
       <Grid container justifyContent='center' alignItems='center'>
@@ -88,7 +93,7 @@ const LoginForm = () => {
         </Grid>
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm
