@@ -38,6 +38,7 @@ const LoginForm = () => {
         setError(true)
       } else {
         console.log(data.data)
+        localStorage.setItem('isLogin', data.data.isLogin)
         navigate('/home')
         setCurrentUser(data.data)
       }

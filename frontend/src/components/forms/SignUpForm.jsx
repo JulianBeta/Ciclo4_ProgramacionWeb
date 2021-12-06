@@ -1,56 +1,63 @@
-import SendIcon from '@mui/icons-material/Send';
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { Box } from '@mui/system';
-import { useState } from 'react';
+import SendIcon from '@mui/icons-material/Send'
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Box } from '@mui/system'
+import { useState, useEffect } from 'react'
 
 const SignUpForm = () => {
-  const [name, setName] = useState('');
-  const [surname, setSurname] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rol, setRol] = useState('');
-  const options = ['Student', 'Leader', 'Teacher'];
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [rol, setRol] = useState('')
+  const options = ['Student', 'Leader', 'Teacher']
+  const [error, setError] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   const clearForm = () => {
-    setName('');
-    setSurname('');
-    setEmail('');
-    setPassword('');
-    setRol('');
-  };
+    setName('')
+    setSurname('')
+    setEmail('')
+    setPassword('')
+    setRol('')
+  }
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setError(false)
+    }, 4000)
+
+    return () => clearTimeout(timer)
+  }, [error])
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const endPoint = 'http://localhost:8000/signup';
+    e.preventDefault()
+    const endPoint = 'http://localhost:8000/signup'
     const payload = {
       firstName: name,
       lastName: surname,
       email,
       password,
       rol,
-    };
+    }
     try {
-      await fetch(endPoint, {
+      const res = await fetch(endPoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
-      });
-      clearForm();
+      })
+      const data = await res.json()
+      console.log(data)
+      if (data) {
+        clearForm()
+        setSuccess(true)
+      }
     } catch (err) {
-      console.log(err);
+      console.log(err)
+      setError(true)
     }
-  };
+  }
   return (
     <Box sx={{ my: 4 }}>
       <Grid container justifyContent='center' alignItems='center'>
@@ -107,6 +114,7 @@ const SignUpForm = () => {
               <FormControl fullWidth>
                 <InputLabel id='select-label'>Rol</InputLabel>
                 <Select
+                  error={error}
                   labelId='select-label'
                   id='rol'
                   value={rol}
@@ -125,10 +133,24 @@ const SignUpForm = () => {
               Submit
             </Button>
           </form>
+          {error && (
+            <Box sx={{ mt: 2 }}>
+              <Typography align='center' color='error'>
+                Error: Verify your credentials
+              </Typography>
+            </Box>
+          )}
+          {success && (
+            <Box sx={{ mt: 2 }}>
+              <Typography align='center' color='green'>
+                Account successfully created! You may login now.
+              </Typography>
+            </Box>
+          )}
         </Grid>
       </Grid>
     </Box>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm
