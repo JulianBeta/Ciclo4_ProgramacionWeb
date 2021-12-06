@@ -10,7 +10,6 @@ const LoginForm = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
   const navigate = useNavigate()
-
   // globalContext
   const { setCurrentUser } = useContext(GlobalContext)
 
@@ -38,11 +37,12 @@ const LoginForm = () => {
       if (!data) {
         setError(true)
       } else {
-        console.log(data)
+        console.log(data.data.user)
+        const user = JSON.stringify(data.data.user)
         localStorage.setItem('Authorization', res.headers.get('Authorization'))
+        localStorage.setItem('user', user)
+        setCurrentUser(data.data.user)
         navigate('/home')
-        // best set this in localStorage
-        setCurrentUser(data.data)
       }
     } catch (err) {
       console.log(err)
