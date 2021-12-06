@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken')
 
 exports.checkAuth = async (req, res, next) => {
-  const isAuth = req.headers.isAuth
+  const auth = req.headers.Authorization
   try {
-    await jwt.verify(isAuth, process.env.JWT_SECRET)
+    await jwt.verify(auth, process.env.JWT_SECRET)
     next()
   } catch (err) {
     console.log(err)

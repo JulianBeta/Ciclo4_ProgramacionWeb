@@ -33,7 +33,9 @@ module.exports.login_post = async (req, res) => {
     const data = {
       user,
     }
-    res.set('Authorization', `Bearer ${token}`)
+    // res.set('Authorization', `Bearer ${token}`)
+    res.set('Authorization', token)
+
     res.status(200).json({ data })
   } catch (err) {
     console.log(err)

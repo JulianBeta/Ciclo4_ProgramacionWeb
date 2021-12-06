@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const RegisteredUsers = () => {
-  const [users, setUsers] = useState()
+  const [users, setUsers] = useState([])
   useEffect(() => {
     fetchUsers()
   }, [])
@@ -13,8 +13,16 @@ const RegisteredUsers = () => {
   const fetchUsers = async (e) => {
     const endPoint = 'http://localhost:8000/allUsers'
     try {
-      const res = await fetch(endPoint)
+      const res = await fetch(endPoint, {
+        headers: {
+          Authorization: localStorage.getItem('Authorization'),
+          'Content-Type': 'application/json',
+        },
+      })
+      console.log(res)
       const data = await res.json()
+      console.log('data', data)
+
       if (!data) {
         // setError(true)
       } else {
@@ -22,7 +30,7 @@ const RegisteredUsers = () => {
         setUsers(data.data)
       }
     } catch (err) {
-      console.log(err)
+      console.log('caught!', err)
       // setError(true)
     }
   }
