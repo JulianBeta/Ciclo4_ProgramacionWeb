@@ -1,3 +1,4 @@
+// HU_002
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useContext, useEffect, useState } from 'react'
@@ -40,6 +41,7 @@ const LoginForm = () => {
         console.log(data.data)
         localStorage.setItem('isLogin', data.data.isLogin)
         navigate('/home')
+        // best set this in localStorage
         setCurrentUser(data.data)
       }
     } catch (err) {

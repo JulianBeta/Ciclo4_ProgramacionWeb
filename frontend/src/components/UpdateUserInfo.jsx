@@ -1,26 +1,19 @@
-//HU_001
-import SendIcon from '@mui/icons-material/Send'
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+// HU_003
+import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { useState, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { GlobalContext } from '../context/GlobalContext'
+import SendIcon from '@mui/icons-material/Send'
 
-const SignUpForm = () => {
+const UpdateUserInfo = () => {
+  const { currentUser, setCurrentUser } = useContext(GlobalContext)
   const [name, setName] = useState('')
   const [surname, setSurname] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [rol, setRol] = useState('')
-  const options = ['Student', 'Leader', 'Teacher']
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState(false)
-  const [success, setSuccess] = useState(false)
-
-  const clearForm = () => {
-    setName('')
-    setSurname('')
-    setEmail('')
-    setPassword('')
-    setRol('')
-  }
+  console.log(currentUser)
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -29,33 +22,38 @@ const SignUpForm = () => {
 
     return () => clearTimeout(timer)
   }, [error])
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/signup'
-    const payload = {
-      firstName: name,
-      lastName: surname,
-      email,
-      password,
-      rol,
-    }
-    try {
-      const res = await fetch(endPoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      })
-      const data = await res.json()
-      console.log(data)
-      if (data) {
-        clearForm()
-        setSuccess(true)
+    if (password === confirmPassword) {
+      const endPoint = 'http://localhost:8000/updateUser'
+      const payload = {
+        ...currentUser.user,
+        firstName: name,
+        lastName: surname,
+        email,
+        password,
       }
-    } catch (err) {
-      console.log(err)
+      try {
+        const res = await fetch(endPoint, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        })
+        const data = await res.json()
+        console.log(data)
+        if (data) {
+          // redirect user to home
+          console.log('user updated')
+          // refresh the info in localStorage
+          // setCurrentUser(data.data)
+        }
+      } catch (err) {
+        console.log(err)
+        setError(true)
+      }
+    } else {
       setError(true)
     }
   }
@@ -63,7 +61,7 @@ const SignUpForm = () => {
     <Box sx={{ my: 4 }}>
       <Grid container justifyContent='center' alignItems='center'>
         <Grid item xs={8} md={5}>
-          <Typography variant='h4'>Welcome aboard!</Typography>
+          <Typography variant='h4'>Editing {currentUser.user ? currentUser.user.firstName : 'user'}'s info!</Typography>
           <form onSubmit={handleSubmit}>
             <Box sx={{ my: 2 }}>
               <TextField
@@ -112,23 +110,16 @@ const SignUpForm = () => {
               />
             </Box>
             <Box sx={{ my: 2 }}>
-              <FormControl fullWidth>
-                <InputLabel id='select-label'>Rol</InputLabel>
-                <Select
-                  error={error}
-                  labelId='select-label'
-                  id='rol'
-                  value={rol}
-                  label='Rol'
-                  onChange={(e) => setRol(e.target.value)}
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <TextField
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                id='confirmPassword'
+                label='Confirm Password'
+                variant='outlined'
+                type='password'
+                fullWidth
+                required
+              />
             </Box>
             <Button variant='contained' endIcon={<SendIcon />} type='submit'>
               Submit
@@ -141,17 +132,10 @@ const SignUpForm = () => {
               </Typography>
             </Box>
           )}
-          {success && (
-            <Box sx={{ mt: 2 }}>
-              <Typography align='center' color='green'>
-                Account successfully created! You may login now.
-              </Typography>
-            </Box>
-          )}
         </Grid>
       </Grid>
     </Box>
   )
 }
 
-export default SignUpForm
+export default UpdateUserInfo
