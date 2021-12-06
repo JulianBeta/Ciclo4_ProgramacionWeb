@@ -38,8 +38,8 @@ const LoginForm = () => {
       if (!data) {
         setError(true)
       } else {
-        console.log(data.data)
-        localStorage.setItem('isLogin', data.data.isLogin)
+        console.log(data)
+        localStorage.setItem('Authorization', res.headers.get('Authorization'))
         navigate('/home')
         // best set this in localStorage
         setCurrentUser(data.data)
