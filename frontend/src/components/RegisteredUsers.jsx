@@ -1,7 +1,8 @@
 // HU_004
 //
-import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, Grid, TextField, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const RegisteredUsers = () => {
   const [users, setUsers] = useState()
@@ -26,7 +27,7 @@ const RegisteredUsers = () => {
     }
   }
   return (
-    <Grid container>
+    <Grid container spacing={1}>
       {users &&
         users.map((user) => (
           <Grid item key={user._id} xs={12} md={2}>
@@ -44,7 +45,9 @@ const RegisteredUsers = () => {
                 <Typography variant='body2'>{user.rol}</Typography>
               </CardContent>
               <CardActions>
-                <Button size='small'>More</Button>
+                <Link to={`/edit/${user._id}`}>
+                  <Button size='small'>More</Button>
+                </Link>
               </CardActions>
             </Card>
           </Grid>
