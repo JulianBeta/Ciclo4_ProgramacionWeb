@@ -4,16 +4,17 @@ import { Box } from '@mui/system'
 import { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../context/GlobalContext'
 import SendIcon from '@mui/icons-material/Send'
+import { useNavigate } from 'react-router'
 
 const UpdateUserInfo = () => {
-  const { currentUser, setCurrentUser } = useContext(GlobalContext)
-  const [name, setName] = useState('')
-  const [surname, setSurname] = useState('')
+  const { currentUser } = useContext(GlobalContext)
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState(false)
-  console.log(currentUser)
+  const navigate = useNavigate()
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -22,14 +23,15 @@ const UpdateUserInfo = () => {
 
     return () => clearTimeout(timer)
   }, [error])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (password === confirmPassword) {
       const endPoint = 'http://localhost:8000/updateUser'
       const payload = {
-        ...currentUser.user,
-        firstName: name,
-        lastName: surname,
+        ...currentUser,
+        firstName,
+        lastName,
         email,
         password,
       }
@@ -37,17 +39,18 @@ const UpdateUserInfo = () => {
         const res = await fetch(endPoint, {
           method: 'PUT',
           headers: {
+            Authorization: localStorage.getItem('Authorization'),
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(payload),
         })
         const data = await res.json()
-        console.log(data)
         if (data) {
-          // redirect user to home
           console.log('user updated')
-          // refresh the info in localStorage
-          // setCurrentUser(data.data)
+          navigate('/')
+          let updatedUser = JSON.stringify(data.data)
+          console.log(data.data)
+          localStorage.setItem('user', updatedUser)
         }
       } catch (err) {
         console.log(err)
@@ -61,14 +64,14 @@ const UpdateUserInfo = () => {
     <Box sx={{ my: 4 }}>
       <Grid container justifyContent='center' alignItems='center'>
         <Grid item xs={8} md={5}>
-          <Typography variant='h4'>Editing {currentUser.user ? currentUser.user.firstName : 'user'}'s info!</Typography>
+          <Typography variant='h4'>Editing {currentUser.firstName}'s info!</Typography>
           <form onSubmit={handleSubmit}>
             <Box sx={{ my: 2 }}>
               <TextField
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 id='firstName'
-                label='Name'
+                label='First Name'
                 variant='outlined'
                 fullWidth
                 required
@@ -76,10 +79,10 @@ const UpdateUserInfo = () => {
             </Box>
             <Box sx={{ my: 2 }}>
               <TextField
-                value={surname}
-                onChange={(e) => setSurname(e.target.value)}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 id='lastName'
-                label='Surname'
+                label='Last Name'
                 variant='outlined'
                 fullWidth
                 required

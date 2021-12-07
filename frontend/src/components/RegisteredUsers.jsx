@@ -19,13 +19,11 @@ const RegisteredUsers = () => {
           },
         })
         if (res.status === 401) {
-          localStorage.removeItem('Authorization')
-          localStorage.removeItem('user')
+          localStorage.clear()
           navigate('/')
         }
         const data = await res.json()
         if (data) {
-          console.log(data.data)
           setUsers(data.data)
         }
       } catch (err) {
