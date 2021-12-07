@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 exports.checkAuth = async (req, res, next) => {
-  const auth = req.headers.Authorization
+  const auth = req.headers.authorization
+  console.log(auth)
   try {
     await jwt.verify(auth, process.env.JWT_SECRET)
     next()
