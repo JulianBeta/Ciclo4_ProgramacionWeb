@@ -1,45 +1,46 @@
 // HU_004
-//
-import { Button, Card, CardActions, CardContent, Grid, TextField, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router'
 
 const RegisteredUsers = () => {
   const [users, setUsers] = useState([])
+  const navigate = useNavigate()
+
   useEffect(() => {
-    fetchUsers()
-  }, [])
-
-  const fetchUsers = async (e) => {
-    const endPoint = 'http://localhost:8000/allUsers'
-    try {
-      const res = await fetch(endPoint, {
-        headers: {
-          Authorization: localStorage.getItem('Authorization'),
-          'Content-Type': 'application/json',
-        },
-      })
-      console.log(res)
-      const data = await res.json()
-      console.log('data', data)
-
-      if (!data) {
-        // setError(true)
-      } else {
-        console.log(data.data)
-        setUsers(data.data)
+    const fetchUsers = async () => {
+      const endPoint = 'http://localhost:8000/allUsers'
+      try {
+        const res = await fetch(endPoint, {
+          headers: {
+            Authorization: localStorage.getItem('Authorization'),
+            'Content-Type': 'application/json',
+          },
+        })
+        if (res.status === 401) {
+          localStorage.removeItem('Authorization')
+          localStorage.removeItem('user')
+          navigate('/')
+        }
+        const data = await res.json()
+        if (data) {
+          console.log(data.data)
+          setUsers(data.data)
+        }
+      } catch (err) {
+        console.log(err)
       }
-    } catch (err) {
-      console.log('caught!', err)
-      // setError(true)
     }
-  }
+    fetchUsers()
+  }, [navigate])
+
   return (
     <Grid container spacing={1}>
       {users &&
         users.map((user) => (
           <Grid item key={user._id} xs={12} md={2}>
-            <Card sx={{ minWidth: 275 }}>
+            <Card variant='outlined'>
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
                   {user.email}
