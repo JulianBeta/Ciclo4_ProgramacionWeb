@@ -36,13 +36,13 @@ export default function TemporaryDrawer() {
     {
       destination: 'List Projects',
       id: 4,
-      path: '/allProjects',
+      path: '/listProjects',
       icon: '',
     },
     {
       destination: 'List Students',
       id: 5,
-      path: '/allStudents',
+      path: '/listStudents',
       icon: '',
     },
   ]

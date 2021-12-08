@@ -1,4 +1,5 @@
 // HU_005
+// HU_011
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
@@ -54,13 +55,13 @@ const EditUserProps = () => {
         {user && (
           <form onSubmit={handleSubmit}>
             <Box sx={{ my: 2 }}>
-              <Typography>{user.firstName}</Typography>
+              <Typography>Name: {user.firstName}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
-              <Typography>{user.lastName}</Typography>
+              <Typography>Surname: {user.lastName}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
-              <Typography>{user.email}</Typography>
+              <Typography>Email: {user.email}</Typography>
             </Box>
             <Box sx={{ my: 2 }}>
               <Typography>
@@ -103,7 +104,15 @@ const EditUserProps = () => {
                 </Select>
               </FormControl>
             </Box>
-
+            <Button
+              sx={{ mr: 2 }}
+              onClick={() => {
+                navigate(-1)
+              }}
+              size='small'
+            >
+              Go back
+            </Button>
             <Button variant='contained' type='submit'>
               Submit
             </Button>

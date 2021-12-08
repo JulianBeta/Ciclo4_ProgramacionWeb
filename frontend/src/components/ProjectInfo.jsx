@@ -1,5 +1,6 @@
-import { Button, Card, CardActions, CardContent, Grid, Link, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
 import { useLocation, useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const ProjectInfo = () => {
   const location = useLocation()
@@ -7,8 +8,8 @@ const ProjectInfo = () => {
   const navigate = useNavigate()
   console.log(project)
   return (
-    <Grid container>
-      <Grid item key={project._id} xs={12} md={2}>
+    <Grid container justifyContent='center'>
+      <Grid item key={project._id} xs={12} md={6}>
         <Card variant='outlined'>
           <CardContent>
             <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>

@@ -6,16 +6,15 @@ import { useLocation, useNavigate } from 'react-router'
 const EditProject = () => {
   const location = useLocation()
   const { project } = location.state
-  const [props, setProps] = useState({ phase: '', status: '', isAccepted: '' })
+  const [props, setProps] = useState({ phase: '', status: '' })
   const [error, setError] = useState(false)
   const navigate = useNavigate()
-  const phaseOptions = ['Leader', 'Teacher', 'Student']
+  const phaseOptions = ['Development', 'Suspended', 'Completed']
   const statusOptions = ['Pending', 'Accepted', 'Rejected']
-  console.log(project)
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/updateproject'
-    if (props.rol && props.status) {
+    const endPoint = 'http://localhost:8000/updateProject'
+    if (props.phase && props.status) {
       try {
         const payload = { ...project, ...props }
         const res = await fetch(endPoint, {
@@ -28,7 +27,6 @@ const EditProject = () => {
         })
         const data = await res.json()
         if (data) {
-          console.log('project updated')
           navigate(-1)
         }
       } catch (err) {
@@ -106,6 +104,15 @@ const EditProject = () => {
                 </FormControl>
               </Box>
 
+              <Button
+                sx={{ mr: 2 }}
+                onClick={() => {
+                  navigate(-1)
+                }}
+                size='small'
+              >
+                Go back
+              </Button>
               <Button variant='contained' type='submit'>
                 Submit
               </Button>
@@ -119,16 +126,6 @@ const EditProject = () => {
               </Typography>
             </Box>
           )}
-        </Grid>
-        <Grid item>
-          <Button
-            onClick={() => {
-              navigate(-1)
-            }}
-            size='small'
-          >
-            Go back
-          </Button>
         </Grid>
       </Grid>
     </Box>

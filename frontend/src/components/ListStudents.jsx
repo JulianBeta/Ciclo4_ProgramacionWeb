@@ -1,10 +1,10 @@
-// HU_004
+// HU_010
 import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router'
 
-const ListAllUsers = () => {
+const ListStudents = () => {
   const [users, setUsers] = useState([])
   const navigate = useNavigate()
 
@@ -24,7 +24,7 @@ const ListAllUsers = () => {
         }
         const data = await res.json()
         if (data) {
-          setUsers(data.data)
+          setUsers(data.data.filter((s) => s.rol.toLowerCase() === 'student'))
         }
       } catch (err) {
         console.log(err)
@@ -53,9 +53,8 @@ const ListAllUsers = () => {
                   <Typography variant='body2'>{user.rol}</Typography>
                 </CardContent>
                 <CardActions>
-                  {/* pass the whole user through the Link */}
                   <Link to={`/editUser/${user._id}`} state={{ user }}>
-                    <Button size='small'>More</Button>
+                    <Button size='small'>Edit</Button>
                   </Link>
                 </CardActions>
               </Card>
@@ -66,4 +65,4 @@ const ListAllUsers = () => {
   )
 }
 
-export default ListAllUsers
+export default ListStudents
