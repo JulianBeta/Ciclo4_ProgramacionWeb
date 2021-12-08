@@ -8,12 +8,8 @@ import ProjectInfo from './components/ProjectInfo'
 import EditProject from './components/EditProject'
 import ListAllProjects from './components/ListAllProjects'
 import ListStudents from './components/ListStudents'
-import { useContext } from 'react'
-import { GlobalContext } from './context/GlobalContext'
-import TemporaryDrawer from './components/DrawerUI'
 
 const App = () => {
-  const { currentUser } = useContext(GlobalContext)
   return (
     <>
       <Router>
