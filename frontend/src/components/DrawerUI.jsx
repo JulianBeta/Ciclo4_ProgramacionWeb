@@ -24,7 +24,7 @@ export default function TemporaryDrawer() {
     {
       destination: 'Update Info',
       id: 2,
-      path: '/updateUserInfo',
+      path: '/home/updateUserInfo',
       icon: '',
     },
     {

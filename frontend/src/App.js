@@ -15,16 +15,20 @@ const App = () => {
       <Router>
         <Routes>
           <Route path='/' element={<WelcomePage />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/updateUserInfo' element={<UpdateUserInfo />} />
-          <Route path='/listAllUsers' element={<ListAllUsers />} />
-          {/* nest inside listAllUsers */}
-          <Route path='/listStudents' element={<ListStudents />} />
-          <Route path='/editUser/:id' element={<EditUserProps />} />
-          <Route path='/listProjects' element={<ListAllProjects />} />
-          {/* nest inside listProjects */}
-          <Route path='/projectInfo/:id' element={<ProjectInfo />} />
-          <Route path='/editProject/:id' element={<EditProject />} />
+          <Route path='home' element={<Home />}>
+            <Route path='updateUserInfo' element={<UpdateUserInfo />} />
+
+            <Route path='users'>
+              <Route path='listAllUsers' element={<ListAllUsers />} />
+              <Route path='listStudents' element={<ListStudents />} />
+              <Route path='editUser/:id' element={<EditUserProps />} />
+            </Route>
+            <Route path='projects'>
+              <Route path='listProjects' element={<ListAllProjects />} />
+              <Route path='projectInfo/:id' element={<ProjectInfo />} />
+              <Route path='editProject/:id' element={<EditProject />} />
+            </Route>
+          </Route>
         </Routes>
       </Router>
     </>
