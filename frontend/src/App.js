@@ -8,24 +8,28 @@ import ProjectInfo from './components/ProjectInfo'
 import EditProject from './components/EditProject'
 import ListAllProjects from './components/ListAllProjects'
 import ListStudents from './components/ListStudents'
-
+import GeneralProtected from './routes/GeneralProtected'
 const App = () => {
   return (
     <>
       <Router>
         <Routes>
           <Route path='/' element={<WelcomePage />} />
-          <Route path='/home' element={<Home />}>
-            <Route path='updateUserInfo' element={<UpdateUserInfo />} />
-            <Route path='users'>
-              <Route path='listAll' element={<ListAllUsers />} />
-              <Route path='listStudents' element={<ListStudents />} />
-              <Route path='editUser/:id' element={<EditUserProps />} />
-            </Route>
-            <Route path='projects'>
-              <Route path='listProjects' element={<ListAllProjects />} />
-              <Route path='projectInfo/:id' element={<ProjectInfo />} />
-              <Route path='editProject/:id' element={<EditProject />} />
+          <Route element={<GeneralProtected />}>
+            <Route path='/home' element={<Home />}>
+              <Route path='updateUserInfo' element={<UpdateUserInfo />} />
+
+              <Route path='users'>
+                <Route path='listAll' element={<ListAllUsers />} />
+                <Route path='listStudents' element={<ListStudents />} />
+                <Route path='editUser/:id' element={<EditUserProps />} />
+              </Route>
+
+              <Route path='projects'>
+                <Route path='listProjects' element={<ListAllProjects />} />
+                <Route path='projectInfo/:id' element={<ProjectInfo />} />
+                <Route path='editProject/:id' element={<EditProject />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

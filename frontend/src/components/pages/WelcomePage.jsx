@@ -10,8 +10,11 @@ const WelcomePage = () => {
   const navigate = useNavigate()
   useEffect(() => {
     const auth = localStorage.getItem('Authorization')
-    if (auth) {
+    const user = localStorage.getItem('user')
+    if (auth && user) {
       navigate('/home')
+    } else {
+      localStorage.clear()
     }
   })
   return (
