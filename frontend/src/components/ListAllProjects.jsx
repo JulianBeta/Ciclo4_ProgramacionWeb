@@ -53,10 +53,10 @@ const ListAllProjects = () => {
                   <Typography variant='body2'>Phase: {project.phase}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to={`/projectInfo/${project._id}`} state={{ project }}>
+                  <Link to={`/home/projects/projectInfo/${project._id}`} state={{ project }}>
                     <Button size='small'>More info</Button>
                   </Link>
-                  <Link to={`/editProject/${project._id}`} state={{ project }}>
+                  <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
                     <Button size='small'>Edit</Button>
                   </Link>
                 </CardActions>

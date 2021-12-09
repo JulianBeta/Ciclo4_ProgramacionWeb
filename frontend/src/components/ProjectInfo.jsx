@@ -41,7 +41,7 @@ const ProjectInfo = () => {
             >
               Go back
             </Button>
-            <Link to={`/editProject/${project._id}`} state={{ project }}>
+            <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
               <Button size='small'>Edit</Button>
             </Link>
           </CardActions>

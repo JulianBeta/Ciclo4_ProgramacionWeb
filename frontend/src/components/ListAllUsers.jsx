@@ -54,7 +54,7 @@ const ListAllUsers = () => {
                 </CardContent>
                 <CardActions>
                   {/* pass the whole user through the Link */}
-                  <Link to={`/editUser/${user._id}`} state={{ user }}>
+                  <Link to={`/home/users/editUser/${user._id}`} state={{ user }}>
                     <Button size='small'>More</Button>
                   </Link>
                 </CardActions>

@@ -30,19 +30,19 @@ export default function TemporaryDrawer() {
     {
       destination: 'List Users',
       id: 3,
-      path: '/listAllUsers',
+      path: '/home/users/listAll',
       icon: '',
     },
     {
       destination: 'List Projects',
       id: 4,
-      path: '/listProjects',
+      path: '/home/projects/listProjects',
       icon: '',
     },
     {
       destination: 'List Students',
       id: 5,
-      path: '/listStudents',
+      path: '/home/users/listStudents',
       icon: '',
     },
   ]
@@ -71,7 +71,7 @@ export default function TemporaryDrawer() {
   return (
     <div>
       <>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
           <Button onClick={toggleDrawer(leftAnchor, true)}>Menu</Button>
           <LogoutButton />
         </Box>

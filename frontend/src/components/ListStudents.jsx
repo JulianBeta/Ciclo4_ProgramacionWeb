@@ -53,7 +53,7 @@ const ListStudents = () => {
                   <Typography variant='body2'>{user.rol}</Typography>
                 </CardContent>
                 <CardActions>
-                  <Link to={`/editUser/${user._id}`} state={{ user }}>
+                  <Link to={`/home/users/editUser/${user._id}`} state={{ user }}>
                     <Button size='small'>Edit</Button>
                   </Link>
                 </CardActions>
