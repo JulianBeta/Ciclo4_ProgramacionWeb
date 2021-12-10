@@ -34,6 +34,10 @@ const App = () => {
                 <Route path='myProjects' element={<MyProjects />} />
                 <Route path='editMy/:id' element={<EditMyProject />} />
               </Route>
+              <Route path='manage'>
+                {/* render list of students  */}
+                <Route path='students' />
+              </Route>
             </Route>
           </Route>
         </Routes>
