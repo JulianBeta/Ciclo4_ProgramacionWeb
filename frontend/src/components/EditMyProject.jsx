@@ -1,18 +1,24 @@
 // HU_005
-import { Button, Grid, Typography } from '@mui/material'
+import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 const EditMyProject = () => {
   const location = useLocation()
   const { project } = location.state
-  const [props, setProps] = useState({ phase: '', status: '' })
+  const [props, setProps] = useState({
+    title: project.title,
+    generalObjectives: project.generalObjectives,
+    specificObjectives: project.specificObjectives,
+    budget: project.budget,
+  })
   const [error, setError] = useState(false)
   const navigate = useNavigate()
+  console.log(props)
   const handleSubmit = async (e) => {
     e.preventDefault()
     const endPoint = 'http://localhost:8000/updateProject'
-    if (props.phase && props.status) {
+    if (props.title && props.generalObjectives && props.specificObjectives && props.budget) {
       try {
         const payload = { ...project, ...props }
         const res = await fetch(endPoint, {
@@ -51,19 +57,45 @@ const EditMyProject = () => {
           <Typography>Do you want to edit your project?</Typography>
           {project && (
             <form onSubmit={handleSubmit}>
-              <Box sx={{ my: 2 }}>
-                <Typography>Title: {project.title}</Typography>
+              <Box sx={{ my: 1.5 }}>
+                <TextField
+                  value={props.title}
+                  placeholder='Title'
+                  required
+                  onChange={(e) => {
+                    setProps({ ...props, title: e.target.value })
+                  }}
+                />
               </Box>
-              <Box sx={{ my: 2 }}>
-                <Typography>Author: {project.author}</Typography>
+              <Box sx={{ my: 1.5 }}>
+                <TextField
+                  value={props.generalObjectives}
+                  placeholder='General Objectives'
+                  required
+                  onChange={(e) => {
+                    setProps({ ...props, generalObjectives: e.target.value })
+                  }}
+                />
               </Box>
-              <Box sx={{ my: 2 }}>
-                <Typography>Budget: {project.budget}</Typography>
+              <Box sx={{ my: 1.5 }}>
+                <TextField
+                  value={props.specificObjectives}
+                  placeholder='Specific Objectives'
+                  required
+                  onChange={(e) => {
+                    setProps({ ...props, specificObjectives: e.target.value })
+                  }}
+                />
               </Box>
-              <Box sx={{ my: 2 }}>
-                <Typography>
-                  Current project's phase: {project.phase} and status: {project.status}
-                </Typography>
+              <Box sx={{ my: 1.5 }}>
+                <TextField
+                  value={props.budget}
+                  placeholder='Budget'
+                  required
+                  onChange={(e) => {
+                    setProps({ ...props, budget: e.target.value })
+                  }}
+                />
               </Box>
               <Button
                 sx={{ mr: 2 }}

@@ -1,8 +1,11 @@
 import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
+import { useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../context/GlobalContext'
 
 const ProjectInfo = () => {
+  const { currentUser } = useContext(GlobalContext)
   const location = useLocation()
   const { project } = location.state
   const navigate = useNavigate()
@@ -41,9 +44,12 @@ const ProjectInfo = () => {
             >
               Go back
             </Button>
-            <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
-              <Button size='small'>Edit</Button>
-            </Link>
+
+            {currentUser.rol.toLowerCase() === 'admin' && (
+              <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
+                <Button size='small'>Edit</Button>
+              </Link>
+            )}
           </CardActions>
         </Card>
       </Grid>

@@ -8,9 +8,7 @@ import { useNavigate } from 'react-router'
 
 const UpdateUserInfo = () => {
   const { currentUser } = useContext(GlobalContext)
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
+  const [updatedUser, setUpdatedUser] = useState({ ...currentUser })
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState(false)
@@ -30,9 +28,7 @@ const UpdateUserInfo = () => {
       const endPoint = 'http://localhost:8000/updateUser'
       const payload = {
         ...currentUser,
-        firstName,
-        lastName,
-        email,
+        ...updatedUser,
         password,
       }
       try {
@@ -64,12 +60,12 @@ const UpdateUserInfo = () => {
     <Box sx={{ my: 4 }}>
       <Grid container justifyContent='center' alignItems='center'>
         <Grid item xs={8} md={5}>
-          <Typography variant='h4'>Editing {currentUser.firstName}'s info!</Typography>
+          <Typography variant='h4'>Editing {updatedUser.firstName}'s info!</Typography>
           <form onSubmit={handleSubmit}>
             <Box sx={{ my: 2 }}>
               <TextField
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                value={updatedUser.firstName}
+                onChange={(e) => setUpdatedUser({ ...updatedUser, firstName: e.target.value })}
                 id='firstName'
                 label='First Name'
                 variant='outlined'
@@ -79,8 +75,8 @@ const UpdateUserInfo = () => {
             </Box>
             <Box sx={{ my: 2 }}>
               <TextField
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                value={updatedUser.lastName}
+                onChange={(e) => setUpdatedUser({ ...updatedUser, lastName: e.target.value })}
                 id='lastName'
                 label='Last Name'
                 variant='outlined'
@@ -90,8 +86,8 @@ const UpdateUserInfo = () => {
             </Box>
             <Box sx={{ my: 2 }}>
               <TextField
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={updatedUser.email}
+                onChange={(e) => setUpdatedUser({ ...updatedUser, email: e.target.value })}
                 id='email'
                 label='Email'
                 variant='outlined'
