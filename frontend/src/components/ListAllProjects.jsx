@@ -25,6 +25,7 @@ const ListAllProjects = () => {
         const data = await res.json()
         if (data) {
           setProjects(data.data)
+          console.log(data.data)
         }
       } catch (err) {
         console.log(err)

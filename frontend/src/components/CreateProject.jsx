@@ -1,22 +1,45 @@
 import SendIcon from '@mui/icons-material/Send'
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material'
+import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { useState, useEffect } from 'react'
+import { useState, useContext } from 'react'
+import { GlobalContext } from '../context/GlobalContext'
 
 const CreateProject = () => {
+  const { currentUser } = useContext(GlobalContext)
   const [project, setProject] = useState({
     title: '',
     generalObjectives: '',
     specificObjectives: '',
-    author: {},
-    phase: '',
     budget: '',
-    status: 'Pending',
   })
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
-  const phaseOptions = ['Development', 'Suspended', 'Completed']
-  const handleSubmit = async () => {}
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const endPoint = 'http://localhost:8000/newProject'
+    const payload = {
+      ...project,
+      author: currentUser.email,
+    }
+    try {
+      const res = await fetch(endPoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('Authorization'),
+        },
+        body: JSON.stringify(payload),
+      })
+      const data = await res.json()
+      if (data) {
+        setSuccess(true)
+      }
+    } catch (err) {
+      console.log(err)
+      setError(true)
+    }
+  }
   return (
     <>
       <Box sx={{ my: 4 }}>
@@ -38,6 +61,7 @@ const CreateProject = () => {
               <Box sx={{ my: 2 }}>
                 <TextField
                   multiline
+                  minRows={3}
                   value={project.generalObjectives}
                   onChange={(e) => setProject({ ...project, generalObjectives: e.target.value })}
                   id='generalObjectives'
@@ -49,6 +73,8 @@ const CreateProject = () => {
               </Box>
               <Box sx={{ my: 2 }}>
                 <TextField
+                  multiline
+                  minRows={3}
                   value={project.specificObjectives}
                   onChange={(e) => setProject({ ...project, specificObjectives: e.target.value })}
                   id='specificObjectives'
@@ -67,26 +93,8 @@ const CreateProject = () => {
                   variant='outlined'
                   required
                   fullWidth
+                  type='number'
                 />
-              </Box>
-              <Box sx={{ my: 2 }}>
-                <FormControl fullWidth>
-                  <InputLabel id='select-label'>Phase</InputLabel>
-                  <Select
-                    error={error}
-                    labelId='select-label'
-                    id='rol'
-                    value={project.phase}
-                    onChange={(e) => setProject({ ...project, phase: e.target.value })}
-                    label='Phase'
-                  >
-                    {phaseOptions.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
               </Box>
               <Button variant='contained' endIcon={<SendIcon />} type='submit'>
                 Submit
@@ -95,14 +103,14 @@ const CreateProject = () => {
             {error && (
               <Box sx={{ mt: 2 }}>
                 <Typography align='center' color='error'>
-                  Error: Verify your credentials
+                  Error: Verify your inputs
                 </Typography>
               </Box>
             )}
             {success && (
               <Box sx={{ mt: 2 }}>
                 <Typography align='center' color='green'>
-                  Account successfully created! You may login now.
+                  Project successfully created!
                 </Typography>
               </Box>
             )}
