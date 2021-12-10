@@ -1,20 +1,17 @@
 const Project = require('../models/Project')
 
 module.exports.createProject_post = async (req, res) => {
-  const { title, generalObjectives, specificObjectives, author, budget, participants } = req.body
-  const status = 'pending'
-  const phase = 'development'
-
+  const { title, generalObjectives, specificObjectives, author, budget } = req.body
   try {
     const project = await Project.create({
       title,
       generalObjectives,
       specificObjectives,
       author,
-      participants,
+      participants: [],
       budget,
-      status,
-      phase,
+      status: 'Pending',
+      phase: 'Development',
     })
     res.status(201).json({ data: project })
   } catch (err) {
@@ -64,12 +61,9 @@ module.exports.pushParticipant = async (req, res) => {
     if (!project) {
       throw new Error('Project not found')
     }
-    console.log(JSON.stringify(project.participants, null, 4))
     const exist = project.participants.find((p) => {
-      console.log(p.user.toString(), user)
       return p?.user.toString() === user
     })
-    console.log(exist)
     if (exist) {
       res.status(200).json({ data: 'user already registered' })
       return
@@ -92,21 +86,16 @@ module.exports.updateParticipant = async (req, res) => {
     if (!project) {
       throw new Error('Project not found')
     }
-    console.log(JSON.stringify(project.participants, null, 4))
     const exist = project.participants.find((p) => {
-      console.log(p.user.toString(), user)
       return p?.user.toString() === user
     })
-    console.log(exist)
-    if (exist) {
-      res.status(200).json({ data: 'user already registered' })
+    if (!exist) {
+      res.status(200).json({ data: 'User does not exist' })
       return
     }
-
-    project.participants.push({ user, status })
+    exist.status = status
     await project.save()
-
-    res.status(200).json({ data: 'Added' })
+    res.status(200).json({ data: 'Status updated' })
   } catch (err) {
     console.log(err)
     res.status(500).send('Error while updating this project')

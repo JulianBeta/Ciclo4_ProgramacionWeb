@@ -15,4 +15,7 @@ router.put('/updateProject', checkAuth, projectControllers.updateProject_put)
 // pushUser
 router.put('/pushUser', projectControllers.pushParticipant)
 
+// updateParticipantStatus
+router.put('/updateParticipant', projectControllers.updateParticipant)
+
 module.exports = router
