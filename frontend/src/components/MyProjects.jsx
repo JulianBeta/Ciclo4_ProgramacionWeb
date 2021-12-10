@@ -1,10 +1,12 @@
-// HU_006
+// HU_014
 import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router'
+import { GlobalContext } from '../context/GlobalContext'
 
-const ListAllProjects = () => {
+const MyProjects = () => {
+  const { currentUser } = useContext(GlobalContext)
   const [projects, setProjects] = useState([])
   const navigate = useNavigate()
 
@@ -24,14 +26,15 @@ const ListAllProjects = () => {
         }
         const data = await res.json()
         if (data) {
-          setProjects(data.data)
+          const myProjects = data.data.filter((p) => p.author === currentUser.email)
+          setProjects(myProjects)
         }
       } catch (err) {
         console.log(err)
       }
     }
     fetchProjects()
-  }, [navigate])
+  }, [navigate, currentUser.email])
 
   return (
     <Container>
@@ -56,7 +59,7 @@ const ListAllProjects = () => {
                   <Link to={`/home/projects/projectInfo/${project._id}`} state={{ project }}>
                     <Button size='small'>More info</Button>
                   </Link>
-                  <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
+                  <Link to={`/home/projects/editMy/${project._id}`} state={{ project }}>
                     <Button size='small'>Edit</Button>
                   </Link>
                 </CardActions>
@@ -68,4 +71,4 @@ const ListAllProjects = () => {
   )
 }
 
-export default ListAllProjects
+export default MyProjects

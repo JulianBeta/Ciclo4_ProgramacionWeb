@@ -6,7 +6,7 @@ const ProjectInfo = () => {
   const location = useLocation()
   const { project } = location.state
   const navigate = useNavigate()
-  console.log(project)
+
   return (
     <Grid container justifyContent='center'>
       <Grid item key={project._id} xs={12} md={6}>

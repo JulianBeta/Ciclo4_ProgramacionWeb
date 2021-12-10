@@ -1,11 +1,14 @@
+// HU__12
 import SendIcon from '@mui/icons-material/Send'
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 import { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
 
 const CreateProject = () => {
   const { currentUser } = useContext(GlobalContext)
+  const navigate = useNavigate()
   const [project, setProject] = useState({
     title: '',
     generalObjectives: '',
@@ -34,6 +37,7 @@ const CreateProject = () => {
       const data = await res.json()
       if (data) {
         setSuccess(true)
+        navigate('/home')
       }
     } catch (err) {
       console.log(err)
