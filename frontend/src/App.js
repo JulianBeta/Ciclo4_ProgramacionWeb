@@ -18,13 +18,11 @@ const App = () => {
           <Route element={<GeneralProtected />}>
             <Route path='/home' element={<Home />}>
               <Route path='updateUserInfo' element={<UpdateUserInfo />} />
-
               <Route path='users'>
                 <Route path='listAll' element={<ListAllUsers />} />
                 <Route path='listStudents' element={<ListStudents />} />
                 <Route path='editUser/:id' element={<EditUserProps />} />
               </Route>
-
               <Route path='projects'>
                 <Route path='listProjects' element={<ListAllProjects />} />
                 <Route path='projectInfo/:id' element={<ProjectInfo />} />

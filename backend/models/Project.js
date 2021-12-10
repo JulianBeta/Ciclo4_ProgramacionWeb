@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const projectSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -17,7 +17,10 @@ const projectSchema = new mongoose.Schema({
     required: true,
   },
   participants: {
-    type: [String],
+    type: [{ status: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' } }],
+  },
+  commits: {
+    type: [{ commit: String, observations: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' } }],
   },
   status: {
     type: String,
@@ -31,8 +34,8 @@ const projectSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-});
+})
 
-const Project = mongoose.model('project', projectSchema);
+const Project = mongoose.model('project', projectSchema)
 
-module.exports = Project;
+module.exports = Project

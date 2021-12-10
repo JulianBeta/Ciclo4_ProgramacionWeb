@@ -12,4 +12,7 @@ router.get('/getProjects', checkAuth, projectControllers.allProjects_get)
 // put
 router.put('/updateProject', checkAuth, projectControllers.updateProject_put)
 
+// pushUser
+router.put('/pushUser', projectControllers.pushParticipant)
+
 module.exports = router
