@@ -10,7 +10,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [rol, setRol] = useState('')
-  const options = ['Student', 'Leader', 'Teacher']
+  const options = ['Student', 'Leader', 'Admin']
   const [error, setError] = useState(false)
   const [success, setSuccess] = useState(false)
 
