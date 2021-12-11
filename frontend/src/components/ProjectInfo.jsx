@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardContent, Grid, List, Typography } from '@mui/material'
 
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
@@ -10,11 +10,45 @@ const ProjectInfo = () => {
   const location = useLocation()
   const { project } = location.state
   const navigate = useNavigate()
-
+  const [participants, setParticipants] = useState(project.participants)
   console.log(project)
-  const handleClick = (p) => {
+  const handleClick = async (p) => {
     console.log(p)
+    const newParticipants = participants.map((student) => {
+      if (student._id === p._id) {
+        student.status === 'Pending' ? (student.status = 'Accepted') : (student.status = 'Pending')
+      }
+      return student
+    })
+    await handleFetch(p)
+    await setParticipants(newParticipants)
   }
+
+  const handleFetch = async (p) => {
+    const endPoint = 'http://localhost:8000/updateParticipant'
+    try {
+      const payload = {
+        _id: project._id,
+        user: p.user._id,
+        status: p.status,
+      }
+      const res = await fetch(endPoint, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: localStorage.getItem('Authorization'),
+        },
+        body: JSON.stringify(payload),
+      })
+      const data = await res.json()
+      if (data) {
+        console.log(data)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <Grid container justifyContent='space-around'>
       <Grid item key={project._id} xs={12} md={6}>
@@ -58,9 +92,10 @@ const ProjectInfo = () => {
           </CardActions>
         </Card>
       </Grid>
+      {/* conditional render this item, p.author === currentUser.email */}
       <Grid item>
         <List>
-          {project.participants.map((p) => {
+          {participants.map((p) => {
             return <ListRequests p={p} handleClick={handleClick} key={p.user._id} />
           })}
         </List>

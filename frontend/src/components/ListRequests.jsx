@@ -5,13 +5,14 @@ import RemoveIcon from '@mui/icons-material/Remove'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
 const ListRequests = ({ p, handleClick }) => {
+  const pending = 'Pending'
   return (
     <>
       <ListItem
         key={p._id}
         secondaryAction={
           <IconButton onClick={() => handleClick(p)} edge='end'>
-            {p.status === 'Pending' ? <AddIcon /> : <RemoveIcon />}
+            {p.status === pending ? <AddIcon /> : <RemoveIcon />}
           </IconButton>
         }
       >
