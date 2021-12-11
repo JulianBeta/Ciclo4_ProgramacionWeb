@@ -22,7 +22,7 @@ const ListRequests = ({ p, handleClick }) => {
           </Avatar>
         </ListItemAvatar>
         <ListItemText>
-          {p.user.email} {p.status}
+          {p.user.email} is {p.status}
         </ListItemText>
       </ListItem>
     </>

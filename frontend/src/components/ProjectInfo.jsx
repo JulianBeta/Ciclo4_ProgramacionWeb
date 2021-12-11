@@ -11,9 +11,10 @@ const ProjectInfo = () => {
   const { project } = location.state
   const navigate = useNavigate()
   const [participants, setParticipants] = useState(project.participants)
-  console.log(project)
+
+  // console.log(project)
   const handleClick = async (p) => {
-    console.log(p)
+    // console.log(p)
     const newParticipants = participants.map((student) => {
       if (student._id === p._id) {
         student.status === 'Pending' ? (student.status = 'Accepted') : (student.status = 'Pending')
@@ -26,11 +27,13 @@ const ProjectInfo = () => {
 
   const handleFetch = async (p) => {
     const endPoint = 'http://localhost:8000/updateParticipant'
+    // find user and take the status from there
+    const targetUser = project.participants.find((s) => s.user._id === p.user._id)
     try {
       const payload = {
         _id: project._id,
         user: p.user._id,
-        status: p.status,
+        status: targetUser.status,
       }
       const res = await fetch(endPoint, {
         method: 'PUT',
@@ -42,7 +45,7 @@ const ProjectInfo = () => {
       })
       const data = await res.json()
       if (data) {
-        console.log(data)
+        // console.log(data)
       }
     } catch (err) {
       console.log(err)
@@ -93,13 +96,15 @@ const ProjectInfo = () => {
         </Card>
       </Grid>
       {/* conditional render this item, p.author === currentUser.email */}
-      <Grid item>
-        <List>
-          {participants.map((p) => {
-            return <ListRequests p={p} handleClick={handleClick} key={p.user._id} />
-          })}
-        </List>
-      </Grid>
+      {project.author === currentUser.email && (
+        <Grid item>
+          <List>
+            {participants.map((p) => {
+              return <ListRequests p={p} handleClick={handleClick} key={p.user._id} />
+            })}
+          </List>
+        </Grid>
+      )}
     </Grid>
   )
 }
