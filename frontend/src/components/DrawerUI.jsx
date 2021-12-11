@@ -96,7 +96,7 @@ export default function TemporaryDrawer() {
   return (
     <div>
       <>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: 1 }}>
           <Button onClick={toggleDrawer(leftAnchor, true)}>Menu</Button>
           <LogoutButton />
         </Box>

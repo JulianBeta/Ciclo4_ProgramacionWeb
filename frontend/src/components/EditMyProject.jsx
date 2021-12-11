@@ -51,9 +51,9 @@ const EditMyProject = () => {
   }, [error])
 
   return (
-    <Box sx={{ m: 2 }}>
+    <Box>
       <Grid container justifyContent='center'>
-        <Grid>
+        <Grid item xs={10} md={6}>
           <Typography>Do you want to edit your project?</Typography>
           {project && (
             <form onSubmit={handleSubmit}>
@@ -62,6 +62,7 @@ const EditMyProject = () => {
                   value={props.title}
                   placeholder='Title'
                   required
+                  fullWidth
                   onChange={(e) => {
                     setProps({ ...props, title: e.target.value })
                   }}
@@ -71,6 +72,9 @@ const EditMyProject = () => {
                 <TextField
                   value={props.generalObjectives}
                   placeholder='General Objectives'
+                  multiline
+                  minRows={3}
+                  fullWidth
                   required
                   onChange={(e) => {
                     setProps({ ...props, generalObjectives: e.target.value })
@@ -81,6 +85,9 @@ const EditMyProject = () => {
                 <TextField
                   value={props.specificObjectives}
                   placeholder='Specific Objectives'
+                  fullWidth
+                  multiline
+                  minRows={3}
                   required
                   onChange={(e) => {
                     setProps({ ...props, specificObjectives: e.target.value })
@@ -92,6 +99,7 @@ const EditMyProject = () => {
                   value={props.budget}
                   placeholder='Budget'
                   required
+                  fullWidth
                   onChange={(e) => {
                     setProps({ ...props, budget: e.target.value })
                   }}

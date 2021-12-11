@@ -38,8 +38,6 @@ const ListAllProjects = () => {
   }
 
   const handleJoin = async (_id, user) => {
-    // console.log(projectID, userID)
-
     const endPoint = 'http://localhost:8000/pushUser'
     try {
       const res = await fetch(endPoint, {
@@ -66,7 +64,6 @@ const ListAllProjects = () => {
         {projects &&
           projects.map((project) => {
             const exist = project.participants.find((p) => p.user._id === currentUser._id)
-
             return (
               <Grid item key={project._id} xs={12} md={3}>
                 <Card variant='outlined'>

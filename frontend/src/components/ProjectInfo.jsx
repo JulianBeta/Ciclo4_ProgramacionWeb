@@ -1,17 +1,22 @@
-import { Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, Grid, List, Typography } from '@mui/material'
+
 import { useContext } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
-
+import ListRequests from './ListRequests'
 const ProjectInfo = () => {
   const { currentUser } = useContext(GlobalContext)
   const location = useLocation()
   const { project } = location.state
   const navigate = useNavigate()
 
+  console.log(project)
+  const handleClick = (p) => {
+    console.log(p)
+  }
   return (
-    <Grid container justifyContent='center'>
+    <Grid container justifyContent='space-around'>
       <Grid item key={project._id} xs={12} md={6}>
         <Card variant='outlined'>
           <CardContent>
@@ -45,13 +50,20 @@ const ProjectInfo = () => {
               Go back
             </Button>
 
-            {currentUser.rol.toLowerCase() === 'admin' && (
+            {currentUser.rol === 'Admin' && (
               <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
                 <Button size='small'>Edit</Button>
               </Link>
             )}
           </CardActions>
         </Card>
+      </Grid>
+      <Grid item>
+        <List>
+          {project.participants.map((p) => {
+            return <ListRequests p={p} handleClick={handleClick} key={p.user._id} />
+          })}
+        </List>
       </Grid>
     </Grid>
   )
