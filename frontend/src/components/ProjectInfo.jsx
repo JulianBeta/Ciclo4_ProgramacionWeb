@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, Grid, List, Typography } from '@mui/material'
+import { Button, Card, CardActions, CardContent, Grid, List, ListSubheader, Typography } from '@mui/material'
 
 import { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
@@ -98,7 +98,7 @@ const ProjectInfo = () => {
       {/* conditional render this item, p.author === currentUser.email */}
       {project.author === currentUser.email && (
         <Grid item>
-          <List>
+          <List subheader={<ListSubheader>Participants</ListSubheader>}>
             {participants.map((p) => {
               return <ListRequests p={p} handleClick={handleClick} key={p.user._id} />
             })}
