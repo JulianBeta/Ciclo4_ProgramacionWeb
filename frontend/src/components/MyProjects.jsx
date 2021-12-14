@@ -12,7 +12,7 @@ const MyProjects = () => {
 
   useEffect(() => {
     const fetchProjects = async () => {
-      const endPoint = 'http://localhost:8000/getProjects'
+      const endPoint = 'http://localhost:8000/project/projects'
       try {
         const res = await fetch(endPoint, {
           headers: {

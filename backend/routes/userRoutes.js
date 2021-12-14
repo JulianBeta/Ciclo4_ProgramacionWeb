@@ -5,13 +5,13 @@ const { checkAuth } = require('../utils/checkAuth')
 const router = Router()
 
 // post
-router.post('/signup', userControllers.signup_post)
-router.post('/login', userControllers.login_post)
+router.post('/user/signup', userControllers.signup)
+router.post('/user/login', userControllers.login)
 
 // get
-router.get('/allUsers', checkAuth, userControllers.allUsers_get)
+router.get('/user/users', checkAuth, userControllers.users)
 
 // put
-router.put('/updateUser', checkAuth, userControllers.updateUser_put)
+router.put('/users/update', checkAuth, userControllers.update)
 
 module.exports = router

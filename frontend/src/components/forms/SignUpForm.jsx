@@ -32,7 +32,7 @@ const SignUpForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/signup'
+    const endPoint = 'http://localhost:8000/user/signup'
     const payload = {
       firstName: name,
       lastName: surname,

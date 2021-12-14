@@ -26,7 +26,7 @@ const ProjectInfo = () => {
   }
 
   const handleFetch = async (p) => {
-    const endPoint = 'http://localhost:8000/updateParticipant'
+    const endPoint = 'http://localhost:8000/project/updateStatus'
     // find user and take the status from there
     const targetUser = project.participants.find((s) => s.user._id === p.user._id)
     try {

@@ -23,7 +23,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/login'
+    const endPoint = 'http://localhost:8000/user/login'
     const payload = { email, password }
     try {
       const res = await fetch(endPoint, {

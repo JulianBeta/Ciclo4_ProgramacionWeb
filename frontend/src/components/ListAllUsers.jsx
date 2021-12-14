@@ -12,7 +12,7 @@ const ListAllUsers = () => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const endPoint = 'http://localhost:8000/allUsers'
+      const endPoint = 'http://localhost:8000/user/users'
       try {
         const res = await fetch(endPoint, {
           headers: {

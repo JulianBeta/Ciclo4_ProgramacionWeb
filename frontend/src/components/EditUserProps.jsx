@@ -14,7 +14,7 @@ const EditUserProps = () => {
   const statusOptions = ['Pending', 'Accepted', 'Rejected']
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/updateUser'
+    const endPoint = 'http://localhost:8000/user/update'
     if (props.rol && props.status) {
       try {
         const payload = { ...user, ...props }

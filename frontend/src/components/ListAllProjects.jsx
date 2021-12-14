@@ -17,7 +17,7 @@ const ListAllProjects = () => {
   }, [])
 
   const fetchProjects = async () => {
-    const endPoint = 'http://localhost:8000/getProjects'
+    const endPoint = 'http://localhost:8000/project/projects'
     try {
       const res = await fetch(endPoint, {
         headers: {
@@ -39,7 +39,7 @@ const ListAllProjects = () => {
   }
 
   const handleJoin = async (_id, user) => {
-    const endPoint = 'http://localhost:8000/pushUser'
+    const endPoint = 'http://localhost:8000/project/newParticipant'
     try {
       const res = await fetch(endPoint, {
         method: 'PUT',

@@ -25,7 +25,7 @@ const UpdateUserInfo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (password === confirmPassword) {
-      const endPoint = 'http://localhost:8000/updateUser'
+      const endPoint = 'http://localhost:8000/user/update'
       const payload = {
         ...currentUser,
         ...updatedUser,

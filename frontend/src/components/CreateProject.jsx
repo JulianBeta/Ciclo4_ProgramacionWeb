@@ -20,7 +20,7 @@ const CreateProject = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/newProject'
+    const endPoint = 'http://localhost:8000/project/new'
     const payload = {
       ...project,
       author: currentUser.email,

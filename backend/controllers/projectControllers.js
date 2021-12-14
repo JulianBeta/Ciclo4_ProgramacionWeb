@@ -1,6 +1,6 @@
 const Project = require('../models/Project')
 
-module.exports.createProject_post = async (req, res) => {
+module.exports.new = async (req, res) => {
   const { title, generalObjectives, specificObjectives, author, budget } = req.body
   try {
     const project = await Project.create({
@@ -20,7 +20,7 @@ module.exports.createProject_post = async (req, res) => {
   }
 }
 
-module.exports.allProjects_get = async (req, res) => {
+module.exports.projects = async (req, res) => {
   try {
     const projects = await Project.find({}).populate({ path: 'participants.user' })
     res.send({ data: projects })
@@ -34,7 +34,7 @@ module.exports.allProjects_get = async (req, res) => {
   Only updates
   title, generalObjectives, specificObjectives, budget
 */
-module.exports.updateProject_put = async (req, res) => {
+module.exports.update = async (req, res) => {
   try {
     const { _id } = req.body
     const project = await Project.findById(_id)
@@ -53,7 +53,7 @@ module.exports.updateProject_put = async (req, res) => {
 
 // module.exports.deleteProject_delete = async (req, res) => {};
 
-module.exports.pushParticipant = async (req, res) => {
+module.exports.newParticipant = async (req, res) => {
   try {
     const { _id, user } = req.body
     const status = 'Pending'
@@ -79,7 +79,7 @@ module.exports.pushParticipant = async (req, res) => {
   }
 }
 
-module.exports.updateParticipant = async (req, res) => {
+module.exports.updateParticipantStatus = async (req, res) => {
   try {
     const { _id, user, status } = req.body
     const project = await Project.findById(_id)

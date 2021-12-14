@@ -17,7 +17,7 @@ const EditMyProject = () => {
   console.log(props)
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/updateProject'
+    const endPoint = 'http://localhost:8000/project/update'
     if (props.title && props.generalObjectives && props.specificObjectives && props.budget) {
       try {
         const payload = { ...project, ...props }

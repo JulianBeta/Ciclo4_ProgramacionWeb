@@ -5,17 +5,17 @@ const { checkAuth } = require('../utils/checkAuth')
 const router = Router()
 
 // post
-router.post('/newProject', checkAuth, projectControllers.createProject_post)
+router.post('/project/new', checkAuth, projectControllers.new)
 // get
-router.get('/getProjects', checkAuth, projectControllers.allProjects_get)
+router.get('/project/projects', checkAuth, projectControllers.projects)
 
 // put
-router.put('/updateProject', checkAuth, projectControllers.updateProject_put)
+router.put('/project/update', checkAuth, projectControllers.update)
 
-// pushUser
-router.put('/pushUser', projectControllers.pushParticipant)
+// add new participant
+router.put('/project/newParticipant', projectControllers.newParticipant)
 
-// updateParticipantStatus
-router.put('/updateParticipant', projectControllers.updateParticipant)
+// update participant status
+router.put('/project/updateStatus', projectControllers.updateParticipantStatus)
 
 module.exports = router

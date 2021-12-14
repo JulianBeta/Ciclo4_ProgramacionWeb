@@ -13,7 +13,7 @@ const EditProject = () => {
   const statusOptions = ['Pending', 'Accepted', 'Rejected']
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const endPoint = 'http://localhost:8000/updateProject'
+    const endPoint = 'http://localhost:8000/project/update'
     if (props.phase && props.status) {
       try {
         const payload = { ...project, ...props }
