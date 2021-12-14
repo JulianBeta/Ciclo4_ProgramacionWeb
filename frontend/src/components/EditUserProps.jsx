@@ -12,7 +12,6 @@ const EditUserProps = () => {
   const navigate = useNavigate()
   const rolOptions = ['Leader', 'Teacher', 'Student']
   const statusOptions = ['Pending', 'Accepted', 'Rejected']
-  console.log(user)
   const handleSubmit = async (e) => {
     e.preventDefault()
     const endPoint = 'http://localhost:8000/updateUser'
@@ -29,7 +28,6 @@ const EditUserProps = () => {
         })
         const data = await res.json()
         if (data) {
-          console.log('user updated')
           navigate(-1)
         }
       } catch (err) {

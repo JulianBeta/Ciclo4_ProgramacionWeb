@@ -58,7 +58,7 @@ const ListAllProjects = () => {
       console.log(err)
     }
   }
-  console.log(projects)
+  const adminButton = currentUser.status === 'Accepted' && currentUser.rol === 'Admin'
   return (
     <Container>
       <Grid container spacing={1}>
@@ -85,9 +85,11 @@ const ListAllProjects = () => {
                     <Link to={`/home/projects/projectInfo/${project._id}`} state={{ project }}>
                       <Button size='small'>More info</Button>
                     </Link>
-                    <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
-                      <Button size='small'>Edit</Button>
-                    </Link>
+                    {adminButton && (
+                      <Link to={`/home/projects/editProject/${project._id}`} state={{ project }}>
+                        <Button size='small'>Edit</Button>
+                      </Link>
+                    )}
                     {!exist ? (
                       <Button size='small' onClick={() => handleJoin(project._id, currentUser._id)}>
                         <AddIcon />

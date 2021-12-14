@@ -16,9 +16,11 @@ import ArchiveIcon from '@mui/icons-material/Archive'
 import ListItemText from '@mui/material/ListItemText'
 import { Link } from 'react-router-dom'
 import LogoutButton from './LogoutButton'
+import { GlobalContext } from '../context/GlobalContext'
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({ left: false })
   const leftAnchor = 'left'
+  const { currentUser } = React.useContext(GlobalContext)
   const menuItems = [
     {
       destination: 'Home',
@@ -53,7 +55,7 @@ export default function TemporaryDrawer() {
       id: 4,
       path: '/home/users/listAll',
       icon: <GroupIcon />,
-      hasAccess: ['Student', 'Admin', 'Leader'],
+      hasAccess: ['Admin', 'Leader'],
     },
     {
       destination: 'List Projects',
@@ -80,14 +82,21 @@ export default function TemporaryDrawer() {
   const list = (anchor) => (
     <Box sx={{ width: 250 }} role='menu' onClick={toggleDrawer(anchor, false)} onKeyDown={toggleDrawer(anchor, false)}>
       <List>
-        {menuItems.map((route) => (
-          <Link to={route.path} key={route.id}>
-            <ListItem button>
-              <ListItemIcon>{route.icon}</ListItemIcon>
-              <ListItemText primary={route.destination} />
-            </ListItem>
-          </Link>
-        ))}
+        {menuItems.map((route) => {
+          const userHasAccess = route.hasAccess.includes(currentUser.rol)
+          if (userHasAccess) {
+            return (
+              <Link to={route.path} key={route.id}>
+                <ListItem button>
+                  <ListItemIcon>{route.icon}</ListItemIcon>
+                  <ListItemText primary={route.destination} />
+                </ListItem>
+              </Link>
+            )
+          } else {
+            return null
+          }
+        })}
       </List>
       <Divider />
     </Box>

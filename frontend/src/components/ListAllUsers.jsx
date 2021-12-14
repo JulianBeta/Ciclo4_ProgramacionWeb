@@ -1,11 +1,13 @@
 // HU_004
 import { Button, Card, CardActions, CardContent, Container, Grid, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router'
+import { GlobalContext } from '../context/GlobalContext'
 
 const ListAllUsers = () => {
   const [users, setUsers] = useState([])
+  const { currentUser } = useContext(GlobalContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const ListAllUsers = () => {
     }
     fetchUsers()
   }, [navigate])
-
+  const hasAccess = currentUser.rol !== 'Student' && currentUser.status === 'Accepted'
   return (
     <Container>
       <Grid container spacing={1}>
@@ -53,10 +55,11 @@ const ListAllUsers = () => {
                   <Typography variant='body2'>{user.rol}</Typography>
                 </CardContent>
                 <CardActions>
-                  {/* pass the whole user through the Link */}
-                  <Link to={`/home/users/editUser/${user._id}`} state={{ user }}>
-                    <Button size='small'>More</Button>
-                  </Link>
+                  {hasAccess && (
+                    <Link to={`/home/users/editUser/${user._id}`} state={{ user }}>
+                      <Button size='small'>More</Button>
+                    </Link>
+                  )}
                 </CardActions>
               </Card>
             </Grid>

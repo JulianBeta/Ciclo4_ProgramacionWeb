@@ -59,9 +59,11 @@ const MyProjects = () => {
                   <Link to={`/home/projects/projectInfo/${project._id}`} state={{ project }}>
                     <Button size='small'>More info</Button>
                   </Link>
-                  <Link to={`/home/projects/editMy/${project._id}`} state={{ project }}>
-                    <Button size='small'>Edit</Button>
-                  </Link>
+                  {project.status === 'Accepted' && (
+                    <Link to={`/home/projects/editMy/${project._id}`} state={{ project }}>
+                      <Button size='small'>Edit</Button>
+                    </Link>
+                  )}
                 </CardActions>
               </Card>
             </Grid>

@@ -37,12 +37,15 @@ const LoginForm = () => {
       if (!data) {
         setError(true)
       } else {
-        console.log(data.data.user)
-        const user = JSON.stringify(data.data.user)
-        localStorage.setItem('Authorization', res.headers.get('Authorization'))
-        localStorage.setItem('user', user)
-        setCurrentUser(data.data.user)
-        navigate('/home')
+        const user = data.data.user
+        if (user.status === 'Accepted') {
+          localStorage.setItem('Authorization', res.headers.get('Authorization'))
+          localStorage.setItem('user', JSON.stringify(user))
+          setCurrentUser(user)
+          navigate('/home')
+        } else {
+          window.alert('You are not authorized yet.')
+        }
       }
     } catch (err) {
       console.log(err)
