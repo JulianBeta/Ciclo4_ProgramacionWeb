@@ -101,3 +101,20 @@ module.exports.updateParticipantStatus = async (req, res) => {
     res.status(500).send('Error while updating this project')
   }
 }
+
+module.exports.newCommit = async (req, res) => {
+  try {
+    const { _id, user, commit } = req.body
+    const project = await Project.findById(_id)
+    if (!project) {
+      throw new Error('Project not found')
+    }
+    project.commits.push({ user, commit, observation: '' })
+    await project.save()
+
+    res.status(200).json({ data: project })
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Error while updating this project')
+  }
+}
