@@ -20,7 +20,7 @@ const projectSchema = new mongoose.Schema({
     type: [{ status: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' } }],
   },
   commits: {
-    type: [{ commit: String, observations: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' } }],
+    type: [{ commit: {title: String, content: String}, observations: String, user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' } }],
   },
   status: {
     type: String,

@@ -13,6 +13,7 @@ import CreateProject from './components/CreateProject'
 import MyProjects from './components/MyProjects'
 import EditMyProject from './components/EditMyProject'
 import StudentProjects from './components/StudentProjects'
+import NewCommit from './components/forms/NewCommit'
 const App = () => {
   return (
     <>
@@ -35,11 +36,11 @@ const App = () => {
                 <Route path='myProjects' element={<MyProjects />} />
                 <Route path='studentProjects' element={<StudentProjects />} />
                 <Route path='editMy/:id' element={<EditMyProject />} />
+                <Route path='newCommit/:id' element={<NewCommit />} />
               </Route>
-              <Route path='manage'>
-                {/* render list of students  */}
+              {/* <Route path='manage'>
                 <Route path='students' />
-              </Route>
+              </Route> */}
             </Route>
           </Route>
         </Routes>
