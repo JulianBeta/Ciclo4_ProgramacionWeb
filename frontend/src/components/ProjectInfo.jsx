@@ -12,9 +12,7 @@ const ProjectInfo = () => {
   const navigate = useNavigate()
   const [participants, setParticipants] = useState(project.participants)
 
-  // console.log(project)
   const handleClick = async (p) => {
-    // console.log(p)
     const newParticipants = participants.map((student) => {
       if (student._id === p._id) {
         student.status === 'Pending' ? (student.status = 'Accepted') : (student.status = 'Pending')
@@ -95,7 +93,6 @@ const ProjectInfo = () => {
           </CardActions>
         </Card>
       </Grid>
-      {/* conditional render this item, p.author === currentUser.email */}
       {project.author === currentUser.email && (
         <Grid item>
           <List subheader={<ListSubheader>Participants</ListSubheader>}>
@@ -105,6 +102,8 @@ const ProjectInfo = () => {
           </List>
         </Grid>
       )}
+      {/* render here the project commits */}
+      {/* {project.commits.length > 0 && <div>test</div>} */}
     </Grid>
   )
 }

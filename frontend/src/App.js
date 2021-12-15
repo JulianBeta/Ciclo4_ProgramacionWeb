@@ -12,6 +12,7 @@ import GeneralProtected from './routes/GeneralProtected'
 import CreateProject from './components/CreateProject'
 import MyProjects from './components/MyProjects'
 import EditMyProject from './components/EditMyProject'
+import StudentProjects from './components/StudentProjects'
 const App = () => {
   return (
     <>
@@ -32,6 +33,7 @@ const App = () => {
                 <Route path='editProject/:id' element={<EditProject />} />
                 <Route path='create' element={<CreateProject />} />
                 <Route path='myProjects' element={<MyProjects />} />
+                <Route path='studentProjects' element={<StudentProjects />} />
                 <Route path='editMy/:id' element={<EditMyProject />} />
               </Route>
               <Route path='manage'>

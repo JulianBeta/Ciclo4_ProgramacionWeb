@@ -18,4 +18,7 @@ router.put('/project/newParticipant', projectControllers.newParticipant)
 // update participant status
 router.put('/project/updateStatus', projectControllers.updateParticipantStatus)
 
+// creates new commit from students
+router.post('/project/commit', projectControllers.newCommit)
+
 module.exports = router

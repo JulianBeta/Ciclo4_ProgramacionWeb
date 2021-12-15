@@ -22,7 +22,7 @@ module.exports.new = async (req, res) => {
 
 module.exports.projects = async (req, res) => {
   try {
-    const projects = await Project.find({}).populate({ path: 'participants.user' })
+    const projects = await Project.find({}).populate({ path: 'participants.user' }).populate({ path: 'commits.user' })
     res.send({ data: projects })
   } catch (err) {
     console.log(err)
@@ -111,7 +111,6 @@ module.exports.newCommit = async (req, res) => {
     }
     project.commits.push({ user, commit, observation: '' })
     await project.save()
-
     res.status(200).json({ data: project })
   } catch (err) {
     console.log(err)

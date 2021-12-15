@@ -14,6 +14,8 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon'
 import GroupIcon from '@mui/icons-material/Group'
 import ArchiveIcon from '@mui/icons-material/Archive'
 import ListItemText from '@mui/material/ListItemText'
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn'
+import BadgeIcon from '@mui/icons-material/Badge'
 import { Link } from 'react-router-dom'
 import LogoutButton from './LogoutButton'
 import { GlobalContext } from '../context/GlobalContext'
@@ -45,28 +47,35 @@ export default function TemporaryDrawer() {
     },
     {
       destination: 'My Projects',
-      id: 7,
+      id: 4,
       path: '/home/projects/myProjects',
       icon: <ArchiveIcon />,
       hasAccess: ['Admin', 'Leader'],
     },
     {
       destination: 'List Users',
-      id: 4,
+      id: 5,
       path: '/home/users/listAll',
       icon: <GroupIcon />,
       hasAccess: ['Admin', 'Leader'],
     },
     {
       destination: 'List Projects',
-      id: 5,
+      id: 6,
       path: '/home/projects/listProjects',
       icon: <AutoStoriesIcon />,
       hasAccess: ['Student', 'Admin', 'Leader'],
     },
     {
+      destination: 'Your Projects',
+      id: 7,
+      path: '/home/projects/studentProjects',
+      icon: <AssignmentTurnedInIcon />,
+      hasAccess: ['Student'],
+    },
+    {
       destination: 'List Students',
-      id: 6,
+      id: 8,
       path: '/home/users/listStudents',
       icon: <InsertEmoticonIcon />,
       hasAccess: ['Admin', 'Leader'],
@@ -81,6 +90,15 @@ export default function TemporaryDrawer() {
 
   const list = (anchor) => (
     <Box sx={{ width: 250 }} role='menu' onClick={toggleDrawer(anchor, false)} onKeyDown={toggleDrawer(anchor, false)}>
+      <List>
+        <ListItem button>
+          <ListItemIcon>
+            <BadgeIcon />
+          </ListItemIcon>
+          <ListItemText secondary={currentUser.email} />
+        </ListItem>
+      </List>
+      <Divider />
       <List>
         {menuItems.map((route) => {
           const userHasAccess = route.hasAccess.includes(currentUser.rol)
