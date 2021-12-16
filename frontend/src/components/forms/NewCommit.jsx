@@ -1,13 +1,42 @@
 import SendIcon from '@mui/icons-material/Send'
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { GlobalContext } from '../../context/GlobalContext'
 const NewCommit = () => {
-  const [commit, setCommit] = useState({})
+  const [commit, setCommit] = useState({
+    title: '',
+    content: '',
+  })
   const navigate = useNavigate()
+  const location = useLocation()
+  const { currentUser } = useContext(GlobalContext)
+  const { project } = location.state
   const handleSubmit = async (e) => {
-    //
+    e.preventDefault()
+    try {
+      const endPoint = 'http://localhost:8000/project/commit'
+      const payload = {
+        commit,
+        _id: project._id,
+        user: currentUser._id,
+      }
+      const res = await fetch(endPoint, {
+        method: 'POST',
+        headers: {
+          Authorization: localStorage.getItem('Authorization'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      })
+      const data = await res.json()
+      if (data) {
+        navigate(-1)
+      }
+    } catch (err) {
+      console.log(err)
+    }
   }
   return (
     <>

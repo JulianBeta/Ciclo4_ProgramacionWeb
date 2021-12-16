@@ -114,6 +114,6 @@ module.exports.newCommit = async (req, res) => {
     res.status(200).json({ data: project })
   } catch (err) {
     console.log(err)
-    res.status(500).send('Error while updating this project')
+    res.status(500).send('Error while creating the commit')
   }
 }
