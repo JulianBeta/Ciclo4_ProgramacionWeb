@@ -12,6 +12,6 @@ router.post('/user/login', userControllers.login)
 router.get('/user/users', checkAuth, userControllers.users)
 
 // put
-router.put('/users/update', checkAuth, userControllers.update)
+router.put('/user/update', checkAuth, userControllers.update)
 
 module.exports = router

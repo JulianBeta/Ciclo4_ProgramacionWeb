@@ -1,14 +1,13 @@
 // HU_003
 import { Button, Grid, TextField, Typography } from '@mui/material'
 import { Box } from '@mui/system'
-import { useContext, useEffect, useState } from 'react'
-import { GlobalContext } from '../context/GlobalContext'
+import { useEffect, useState } from 'react'
 import SendIcon from '@mui/icons-material/Send'
 import { useNavigate } from 'react-router'
 
 const UpdateUserInfo = () => {
-  const { currentUser } = useContext(GlobalContext)
-  const [updatedUser, setUpdatedUser] = useState({ ...currentUser })
+  // const { currentUser } = useContext(GlobalContext)
+  const [updatedUser, setUpdatedUser] = useState(JSON.parse(localStorage.getItem('user')))
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState(false)
@@ -22,12 +21,13 @@ const UpdateUserInfo = () => {
     return () => clearTimeout(timer)
   }, [error])
 
+  useEffect(() => {}, [])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (password === confirmPassword) {
       const endPoint = 'http://localhost:8000/user/update'
       const payload = {
-        ...currentUser,
         ...updatedUser,
         password,
       }
