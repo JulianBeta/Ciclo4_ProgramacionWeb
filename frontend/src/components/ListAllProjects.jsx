@@ -51,7 +51,6 @@ const ListAllProjects = () => {
       })
       const data = await res.json()
       if (data) {
-        console.log(data)
         fetchProjects()
       }
     } catch (err) {

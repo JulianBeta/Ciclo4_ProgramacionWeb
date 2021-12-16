@@ -14,7 +14,6 @@ const EditMyProject = () => {
   })
   const [error, setError] = useState(false)
   const navigate = useNavigate()
-  console.log(props)
   const handleSubmit = async (e) => {
     e.preventDefault()
     const endPoint = 'http://localhost:8000/project/update'

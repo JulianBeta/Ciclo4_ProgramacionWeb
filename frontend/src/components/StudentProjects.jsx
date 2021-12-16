@@ -31,7 +31,6 @@ const StudentProjects = () => {
               return student.user.email === currentUser.email && student.status === 'Accepted'
             })
           })
-          console.log(studentProjects)
           setProjects(studentProjects)
         }
       } catch (err) {

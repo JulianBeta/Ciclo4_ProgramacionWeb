@@ -1,9 +1,11 @@
 import { Button, Card, CardActions, CardContent, Grid, List, ListSubheader, Typography } from '@mui/material'
+import { Box } from '@mui/system'
 
 import { useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
+import ListCommits from './ListCommits'
 import ListRequests from './ListRequests'
 const ProjectInfo = () => {
   const { currentUser } = useContext(GlobalContext)
@@ -43,7 +45,7 @@ const ProjectInfo = () => {
       })
       const data = await res.json()
       if (data) {
-        // console.log(data)
+        console.log('status updated')
       }
     } catch (err) {
       console.log(err)
@@ -61,19 +63,20 @@ const ProjectInfo = () => {
             <Typography variant='h5' component='div'>
               {project.title}
             </Typography>
-            <Typography sx={{ mb: 1.5 }} color='text.secondary'>
-              Status: {project.status}
-            </Typography>
+            <Typography sx={{ mb: 1.5 }}>Status: {project.status}</Typography>
             <Typography variant='body2'>Phase: {project.phase}</Typography>
-            <Typography sx={{ mt: 1.5 }} color='text.secondary'>
-              General Objectives: {project.generalObjectives}
-            </Typography>
-            <Typography sx={{ mt: 1.5 }} color='text.secondary'>
-              Specific Objectives: {project.specificObjectives}
-            </Typography>
-            <Typography sx={{ mt: 1.5 }} color='text.secondary'>
-              Initial budget: {project.budget}
-            </Typography>
+            <Typography sx={{ mt: 1.5 }}>General Objectives: {project.generalObjectives}</Typography>
+            <Typography sx={{ mt: 1.5 }}>Specific Objectives: {project.specificObjectives}</Typography>
+            <Typography sx={{ mt: 1.5 }}>Initial budget: {project.budget}</Typography>
+            {project.commits.length > 0 && (
+              <Box sx={{ mt: 2 }}>
+                <List subheader="Student's commits:">
+                  {project.commits.map((c) => (
+                    <ListCommits commit={c} key={c._id} project={project} />
+                  ))}
+                </List>
+              </Box>
+            )}
           </CardContent>
           <CardActions>
             <Button
@@ -102,8 +105,6 @@ const ProjectInfo = () => {
           </List>
         </Grid>
       )}
-      {/* render here the project commits */}
-      {/* {project.commits.length > 0 && <div>test</div>} */}
     </Grid>
   )
 }

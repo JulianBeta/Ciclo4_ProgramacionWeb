@@ -49,7 +49,6 @@ const SignUpForm = () => {
         body: JSON.stringify(payload),
       })
       const data = await res.json()
-      console.log(data)
       if (data) {
         clearForm()
         setSuccess(true)

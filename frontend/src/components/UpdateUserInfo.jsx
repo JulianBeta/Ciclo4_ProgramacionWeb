@@ -42,10 +42,8 @@ const UpdateUserInfo = () => {
         })
         const data = await res.json()
         if (data) {
-          console.log('user updated')
           navigate('/')
           let updatedUser = JSON.stringify(data.data)
-          console.log(data.data)
           localStorage.setItem('user', updatedUser)
         }
       } catch (err) {
