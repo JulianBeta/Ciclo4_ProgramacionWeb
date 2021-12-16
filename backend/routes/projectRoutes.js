@@ -21,4 +21,7 @@ router.put('/project/updateStatus', projectControllers.updateParticipantStatus)
 // creates new commit from students
 router.post('/project/commit', projectControllers.newCommit)
 
+// creates new observation
+router.post('/project/commentCommit', projectControllers.observations)
+
 module.exports = router

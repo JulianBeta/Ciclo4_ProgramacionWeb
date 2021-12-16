@@ -109,9 +109,30 @@ module.exports.newCommit = async (req, res) => {
     if (!project) {
       throw new Error('Project not found')
     }
-    project.commits.push({ user, commit, observation: '' })
+    project.commits.push({ user, commit, observations: '' })
     await project.save()
     res.status(200).json({ data: project })
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Error while creating the commit')
+  }
+}
+
+module.exports.observations = async (req, res) => {
+  try {
+    const { _id, commitID, observations } = req.body
+    const project = await Project.findById(_id)
+    if (!project) {
+      throw new Error('Project not found')
+    }
+    const commit = project.commits.find((commit) => commit._id.toString() === commitID.toString())
+    if (commit) {
+      commit.observations = observations
+      await project.save()
+      res.status(200).json({ data: project })
+    } else {
+      throw new Error('Commit not found')
+    }
   } catch (err) {
     console.log(err)
     res.status(500).send('Error while creating the commit')

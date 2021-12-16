@@ -1,19 +1,15 @@
-import { Button, TextField, Typography } from '@mui/material'
+import { Box, Button, TextField } from '@mui/material'
 import SendIcon from '@mui/icons-material/Send'
-import { useState } from 'react'
 
-const CommentCommit = ({ project, user }) => {
-  const [comment, setComment] = useState('')
-
+const CommentCommit = ({ project, comment, setComment, commit, setIsVisible }) => {
   const handleSubmit = async (e) => {
-    //hit new endpoint and add comment
     e.preventDefault()
     try {
-      const endPoint = 'http://localhost:8000/project/commit'
+      const endPoint = 'http://localhost:8000/project/commentCommit'
       const payload = {
-        comment,
+        observations: comment,
         _id: project._id,
-        user: user._id,
+        commitID: commit._id,
       }
       const res = await fetch(endPoint, {
         method: 'POST',
@@ -25,18 +21,20 @@ const CommentCommit = ({ project, user }) => {
       })
       const data = await res.json()
       if (data) {
-        // navigate(-1)
+        setIsVisible(false)
       }
     } catch (err) {
       console.log(err)
     }
   }
   return (
-    <form onSubmit={() => handleSubmit()}>
-      <TextField label='Comment' multiline value={comment} onChange={(e) => setComment(e.target.value)} />
-      <Button>
-        <SendIcon />
-      </Button>
+    <form onSubmit={handleSubmit}>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <TextField label='Comment' multiline value={comment} onChange={(e) => setComment(e.target.value)} />
+        <Button type='submit'>
+          <SendIcon />
+        </Button>
+      </Box>
     </form>
   )
 }

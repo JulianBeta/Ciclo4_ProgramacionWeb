@@ -1,7 +1,7 @@
 import { Button, Card, CardActions, CardContent, Grid, List, ListSubheader, Typography } from '@mui/material'
 import { Box } from '@mui/system'
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/GlobalContext'
@@ -13,6 +13,12 @@ const ProjectInfo = () => {
   const { project } = location.state
   const navigate = useNavigate()
   const [participants, setParticipants] = useState(project.participants)
+
+  useEffect(() => {
+    if (!project) {
+      navigate('/home')
+    }
+  }, [project, navigate])
 
   const handleClick = async (p) => {
     const newParticipants = participants.map((student) => {
@@ -71,8 +77,8 @@ const ProjectInfo = () => {
             {project.commits.length > 0 && (
               <Box sx={{ mt: 2 }}>
                 <List subheader="Student's commits:">
-                  {project.commits.map((c) => (
-                    <ListCommits commit={c} key={c._id} project={project} />
+                  {project.commits.map((commit) => (
+                    <ListCommits commit={commit} key={commit._id} project={project} />
                   ))}
                 </List>
               </Box>
