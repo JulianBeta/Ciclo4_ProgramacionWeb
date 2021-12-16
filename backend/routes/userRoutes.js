@@ -1,16 +1,17 @@
-const { Router } = require('express');
-const userControllers = require('../controllers/userControllers');
+const { Router } = require('express')
+const userControllers = require('../controllers/userControllers')
+const { checkAuth } = require('../utils/checkAuth')
 
-const router = Router();
+const router = Router()
 
 // post
-router.post('/signup', userControllers.signup_post);
-router.post('/login', userControllers.login_post);
+router.post('/user/signup', userControllers.signup)
+router.post('/user/login', userControllers.login)
 
 // get
-router.get('/allUsers', userControllers.allUsers_get);
+router.get('/user/users', checkAuth, userControllers.users)
 
 // put
-router.put('/updateUser', userControllers.updateUser_put);
+router.put('/user/update', checkAuth, userControllers.update)
 
-module.exports = router;
+module.exports = router

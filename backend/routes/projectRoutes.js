@@ -1,14 +1,27 @@
-const { Router } = require('express');
-const projectControllers = require('../controllers/projectControllers');
+const { Router } = require('express')
+const projectControllers = require('../controllers/projectControllers')
+const { checkAuth } = require('../utils/checkAuth')
 
-const router = Router();
+const router = Router()
 
 // post
-router.post('/newProject', projectControllers.createProject_post);
+router.post('/project/new', checkAuth, projectControllers.new)
 // get
-router.get('/getProjects', projectControllers.allProjects_get);
+router.get('/project/projects', checkAuth, projectControllers.projects)
 
 // put
-router.put('/updateProject', projectControllers.updateProject_put);
+router.put('/project/update', checkAuth, projectControllers.update)
 
-module.exports = router;
+// add new participant
+router.put('/project/newParticipant', projectControllers.newParticipant)
+
+// update participant status
+router.put('/project/updateStatus', projectControllers.updateParticipantStatus)
+
+// creates new commit from students
+router.post('/project/commit', projectControllers.newCommit)
+
+// creates new observation
+router.post('/project/commentCommit', projectControllers.observations)
+
+module.exports = router
